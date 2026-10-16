@@ -1,0 +1,10 @@
+
+Flask
+flask-cors
+gunicorn
+numpy
+opencv-python-headless
+Pillow
+PyMuPDF
+pytesseract
+python-pptx
