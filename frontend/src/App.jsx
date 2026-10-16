@@ -3,7 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import "./App.css";
 
-const API = "http://127.0.0.1:5000";
+const API =
+  import.meta.env.VITE_API_URL ||
+  "https://evidenceguard-ai-4yfk.onrender.com";
 
 const ACCEPTED =
   ".jpg,.jpeg,.png,.webp,.bmp,.tif,.tiff,.pdf,.pptx,.mp4,.mov,.avi,.mkv,.webm";
@@ -58,7 +60,7 @@ function App() {
         err.response?.data?.error ||
         (err.code === "ECONNABORTED"
           ? "The scan took too long. Try a smaller PDF or fewer pages."
-          : "Cannot connect to the Python server. Start backend/app.py and try again.");
+          : "Cannot connect to the EvidenceGuard AI server. Please try again.");
 
       setError(message);
       setStatus("");
@@ -104,7 +106,7 @@ function App() {
       try {
         if (!navigator.mediaDevices?.getUserMedia) {
           throw new Error(
-            "Camera access is unavailable. Use localhost or HTTPS, or upload a ticket photo instead."
+            "Camera access is unavailable. Use localhost or HTTPS, or upload a document photo instead."
           );
         }
 
@@ -128,7 +130,7 @@ function App() {
         if (!cancelled) {
           setCameraError(
             err.name === "NotAllowedError"
-              ? "Camera permission was denied. Allow camera access in your browser, or upload a ticket photo."
+              ? "Camera permission was denied. Allow camera access in your browser, or upload a document photo."
               : err.message ||
                   "Could not start the camera. You can still upload a document."
           );
@@ -450,7 +452,7 @@ function App() {
 
             <p className="muted">
               Keep the ticket flat, well-lit and fully visible.
-              The captured photo is sent to your local Python server.
+              The captured photo is sent to the configured Python server.
             </p>
           </section>
         )}
@@ -887,7 +889,7 @@ function App() {
           )}
         </section>
 
-        {/* UPDATED FOOTER WITH EMAIL */}
+        {/* FOOTER */}
         <footer>
           <strong>EvidenceGuard AI</strong>
 
